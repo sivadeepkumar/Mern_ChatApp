@@ -13,6 +13,10 @@ export const Chat = () => {
     const [currentChat, setCurrentChat] = useState(undefined);
     const navigate = useNavigate()
 
+    const updateContacts = (newContacts) => {
+        setContacts(newContacts);
+      };
+
     useEffect(() => {
         const checkLocalStorage = async () => {
             if (!localStorage.getItem('chat-app-user')) {
@@ -21,7 +25,6 @@ export const Chat = () => {
                 setCurrentUser(await JSON.parse(localStorage.getItem('chat-app-user')))
                 console.log(currentUser)
             }
-            
         }
         checkLocalStorage()
     },[navigate])
@@ -53,6 +56,7 @@ return (
     <div className="container">
     <Contacts 
     contacts={contacts} 
+    updateContacts = {updateContacts}
     currentUser={currentUser}  
     changeChat={handleChatChange} 
     />

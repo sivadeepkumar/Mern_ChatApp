@@ -3,11 +3,16 @@ import styled from "styled-components";
 import Logo from "../assets/logo.svg";
 import { useNavigate } from "react-router-dom";
 
-export default function Contacts({ contacts, changeChat }) {
+export default function Contacts({ contacts, changeChat,updateContacts }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
   const navigate = useNavigate()
+
+  const removeContact = (contact) => {
+    const newContacts = contacts.filter((c) => c._id !== contact._id);
+    updateContacts(newContacts);
+  };
 
   useEffect(() => {
 
@@ -58,6 +63,7 @@ export default function Contacts({ contacts, changeChat }) {
                   <div className="username">
                     <h3>{contact.username}</h3>
                   </div>
+                  <button onClick={() => removeContact(contact)}>X</button>
                 </div>
               )
             )}
@@ -71,7 +77,7 @@ export default function Contacts({ contacts, changeChat }) {
               />
             </div>
             <div className="username">
-              <h2>{currentUserName}</h2>
+              <h2>{currentUserName}  {contacts.length}</h2>
             </div>
           </div>
         </Container>
